@@ -12,4 +12,5 @@ class NotificationController extends Controller
         $notifications = $user->notifications()->get(['data']);
         return response()->json($notifications);
     }
+    
 }

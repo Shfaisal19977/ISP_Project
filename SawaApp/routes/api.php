@@ -8,6 +8,8 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IptvSubscriptionController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\BundleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,9 @@ use App\Http\Controllers\NotificationController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::get('/bundles', [BundleController::class, 'index']);
+
 
 Route::get('/', function (Request $request) {
     return response()->json(['message' => 'Login required'], 200);
@@ -40,5 +45,21 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/iptv-subscriptions', [IptvSubscriptionController::class, 'create']);
     Route::get('/iptv-subscriptions/{id}', [IptvSubscriptionController::class, 'show']);
+    Route::delete('/iptv-subscriptions-delete/{id}', [IptvSubscriptionController::class, 'delete']);
+    Route::put('/iptv-subscriptions-update', [IptvSubscriptionController::class, 'update']);
 });
 Route::middleware('auth:sanctum')->get('/{id}', [NotificationController::class, 'getNotifications']);
+
+
+Route::post('/create-payments', [PaymentController::class, 'createPayment']);
+Route::get('/payments/{userId}', [PaymentController::class, 'getPayments']);
+Route::delete('/payments-delete/{id}', [PaymentController::class, 'deletePayment']);
+Route::put('/payments-update', [PaymentController::class, 'updatePayment']);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/bundles/{id}', [BundleController::class, 'show']);
+    Route::post('/store-bundles', [BundleController::class, 'store']);
+    Route::put('/bundles-update/{id}', [BundleController::class, 'update']);
+    Route::delete('/bundles-destroy/{id}', [BundleController::class, 'destroy']);
+});

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\IPTVRequest;
+use App\Http\Requests\UpdateIPTVSubscription;
 use App\Models\IptvSubscription;
 
 class IptvSubscriptionController extends Controller
@@ -30,5 +31,33 @@ class IptvSubscriptionController extends Controller
             return response()->json(['error' => 'IPTV subscription not found'], 404);
         }
         return response()->json($iptvSubscription);
+    }
+    public function update(UpdateIPTVSubscription $request, $id)
+    {
+        $subscription = IPTVSubscription::find($id);
+
+        if (!$subscription) {
+            return response()->json(['error' => 'IPTV subscription not found'], 404);
+        }
+
+        $validatedData = $request->validated();
+        $subscription->update($validatedData);
+
+        return response()->json([
+            'message' => 'IPTV subscription updated successfully',
+            'iptv_subscription' => $subscription
+        ], 200);
+    }
+    public function delete($id)
+    {
+        $subscription = IPTVSubscription::find($id);
+
+        if (!$subscription) {
+            return response()->json(['error' => 'IPTV subscription not found'], 404);
+        }
+
+        $subscription->delete();
+
+        return response()->json(['message' => 'IPTV subscription deleted successfully'], 200);
     }
 }

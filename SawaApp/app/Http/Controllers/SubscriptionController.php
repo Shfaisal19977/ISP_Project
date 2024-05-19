@@ -74,7 +74,9 @@ class SubscriptionController extends Controller
                 } elseif ($subscription->end_date <= now()) {
                     $status = 'suspended';
                 }
-
+                if ($subscription->end_date->diffInDays(now()) <= 3) {
+                    $status = 'about_to_end';
+                }
                 return [
                     'bundle_size' => $subscription->bundle_size,
                     'status' => $status,

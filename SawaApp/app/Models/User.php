@@ -105,4 +105,13 @@ class User extends Authenticatable
             'data' => json_encode(['message' => $message, 'type' => $type]),
         ]);
     }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function bundles()
+    {
+        return $this->hasMany(Bundle::class);
+    }
 }
