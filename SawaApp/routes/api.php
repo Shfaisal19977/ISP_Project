@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\logincon; // Import the UserAuthController class
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\IptvSubscriptionController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +20,25 @@ use App\Http\Controllers\PasswordController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/', function (Request $request) {
+    return response()->json(['message' => 'Login required'], 200);
+})->name('unauthenticated');
 Route::post('/Login/VerificationRequest', [logincon::class, 'initiateLogin']);
 Route::post('/Login/VerificationCode', [logincon::class, 'verifyLogin']);
 Route::middleware('auth:sanctum')->post('Logout', [logincon::class, 'logout'])->name('logout');
 Route::post('/Reset/Password', [PasswordController::class, 'resetPassword']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/user/subscribe', [SubscriptionController::class, 'subscribe']);
+    Route::post('/user/extend-subscription', [SubscriptionController::class, 'extendSubscription']);
+    Route::post('/user/change-speed', [SubscriptionController::class, 'changeSpeed']);
+    Route::delete('/user/delete-subscription', [SubscriptionController::class, 'deleteSubscription']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::get('/users/Subscription/{user}', [UserController::class, 'getUserSubscription']);
+    Route::get('/user/subscription-status/{user}', [SubscriptionController::class, 'getSubscriptionStatus']);
+    Route::get('users/{userId}/service-type-name', [UserController::class, 'getServiceTypeName']);
+});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/iptv-subscriptions', [IptvSubscriptionController::class, 'create']);
+    Route::get('/iptv-subscriptions/{id}', [IptvSubscriptionController::class, 'show']);
+});
+Route::middleware('auth:sanctum')->get('/{id}', [NotificationController::class, 'getNotifications']);

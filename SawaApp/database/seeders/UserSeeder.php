@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $faker = \Faker\Factory::create();
-        $this->createUsers($faker, 50); // Replace 50 with the desired number of users
+        $this->createUsers($faker, 10); // Replace 50 with the desired number of users
     }
 
     private function createUsers(Faker $faker, int $count)

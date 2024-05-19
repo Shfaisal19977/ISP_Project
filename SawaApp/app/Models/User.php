@@ -74,4 +74,35 @@ class User extends Authenticatable
             return response()->json(['message' => 'Error logging out'], 500);
         }
     }
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+    public function iptvSubscriptions()
+    {
+        return $this->hasMany(IptvSubscription::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+    //     public function sendNotification($message, $type)
+    // {
+    //     $this->notifications()->create([
+    //         'message' => $message,
+    //         'type' => $type,
+    //     ]);
+    // }
+    public function sendNotification($message, $type)
+    {
+        // Log the notification
+        \Illuminate\Support\Facades\Log::info("Notification sent to user {$this->id}: $message");
+
+        // Create the notification
+        $this->notifications()->create([
+            'type' => 'App\\Notifications\\UserNotification',
+            'data' => json_encode(['message' => $message, 'type' => $type]),
+        ]);
+    }
 }
