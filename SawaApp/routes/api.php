@@ -10,6 +10,7 @@ use App\Http\Controllers\IptvSubscriptionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\BundleController;
+use App\Http\Controllers\ChannelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,4 +63,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/store-bundles', [BundleController::class, 'store']);
     Route::put('/bundles-update/{id}', [BundleController::class, 'update']);
     Route::delete('/bundles-destroy/{id}', [BundleController::class, 'destroy']);
+    Route::get('/channels/{category}', [ChannelController::class, 'getChannelsByCategory']);
+    Route::post('/create-payments', [PaymentController::class, 'createPayment']);
+    Route::get('/payments/{userId}', [PaymentController::class, 'getPayments']);
+    Route::delete('/payments-delete/{id}', [PaymentController::class, 'deletePayment']);
+    Route::put('/payments-update', [PaymentController::class, 'updatePayment']);
 });

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->string('status');
             $table->integer('used_units')->default(0);
+            $table->integer('additional_shows')->nullable();
             $table->timestamps();
         });
     }

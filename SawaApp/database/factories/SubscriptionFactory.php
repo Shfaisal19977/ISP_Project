@@ -28,9 +28,7 @@ class SubscriptionFactory extends Factory
             'start_date' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'end_date' => $this->faker->dateTimeBetween('now', '+1 month'),
             'speed' => $this->faker->randomElement($speeds),
-            'service_type_id' => ServiceType::factory(),  // Replace with this line
-
-
+            'service_type_id' => ServiceType::factory(),
         ];
     }
 }

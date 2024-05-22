@@ -34,8 +34,9 @@ class BundleFactory extends Factory
             'bundle_type' => $this->faker->word,
             'max_speed' => intval($maxSpeed),
             'price' => $maxSpeedPrices[$maxSpeed],
-
             'max_bundle' => $this->faker->numberBetween(1, 10),
+            'promotion' => $this->faker->randomElement(['50% off for first 3 months', 'Free installation', 'Includes 10 additional channels']),
+
         ];
     }
 }

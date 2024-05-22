@@ -32,4 +32,8 @@ class Subscription extends Model
     {
         return $this->belongsTo(ServiceType::class);
     }
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class);
+    }
 }

@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bundles', function (Blueprint $table) {
+        Schema::create('channels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('bundle_type');
-            $table->decimal('price', 8, 2);
-            $table->integer('max_speed');
-            $table->integer('max_bundle');
-            $table->string('promotion')->nullable();
-
+            $table->foreignId('iptv_subscription_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('category')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bundles');
+        Schema::dropIfExists('channels');
     }
 };

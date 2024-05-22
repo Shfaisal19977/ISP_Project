@@ -20,7 +20,6 @@ class UserFactory extends Factory
             "Aleppo" => "21",
             "Homs" => "31",
             "Latakia" => "41",
-            // You can add more cities here if needed
         ];
         $syrianCities = [
             "Damascus",

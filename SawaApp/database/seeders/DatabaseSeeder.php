@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Channel;
+use App\Models\Subscription;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,22 +14,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-      
         $this->call([
-            SubscriptionSeeder::class,
             UserSeeder::class,
+            SubscriptionSeeder::class,
             ServiceTypeSeeder::class,
             NotificationSeeder::class,
             BundleSeeder::class,
             PaymentSeeder::class,
-            NotificationSeeder::class,
+            IptvSeeder::class,
+            ChannelSeeder::class,
 
         ]);
+        $channels = Channel::factory()->count(5)->create();
+        $subscriptions = Subscription::all();
+        foreach ($subscriptions as $subscription) {
+            $subscription->channels()->attach($channels->random(2));
+        }
     }
 }

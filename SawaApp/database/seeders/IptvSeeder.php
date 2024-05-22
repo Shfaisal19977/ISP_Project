@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\IptvSubscription;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Subscription;
+use App\Models\IptvSubscription;
 
-class SubscriptionSeeder extends Seeder
+class IptvSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Subscription::factory(1)->create();
+        IptvSubscription::factory(100)->create();
     }
 }
